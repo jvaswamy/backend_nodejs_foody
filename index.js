@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 dotEnv.config();
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -28,8 +28,8 @@ mongoose
 
 app.listen(PORT, () => console.log(`Server is running at ${PORT}`));
 
-app.use("/home", (req, res) => {
-  res.send("<h1>Welcome to the Home Page</h1>");
+app.use("/", (req, res) => {
+  res.send("<h1>Welcome to the Foody App</h1>");
 });
 
 app.use("/vendor", vendorRoutes);
