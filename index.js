@@ -26,12 +26,12 @@ mongoose
     console.error("MongoDB connection failed", err);
   });
 
-app.listen(PORT, () => console.log(`Server is running at ${PORT}`));
-
 app.use("/vendor", vendorRoutes);
 app.use("/firm", firmRoutes);
 app.use("/product", productRouters);
 app.use("/uploads", express.static("uploads")); //standard farmat
+
+app.listen(PORT, () => console.log(`Server is running at ${PORT}`));
 
 app.use("/", (req, res) => {
   res.send("<h1>Welcome to the Foody App</h1>");
