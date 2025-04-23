@@ -13,10 +13,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-dotEnv.config();
-
 const port = process.env.PORT || 4000;
-console.log(process.env.PORT);
+
+dotEnv.config();
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -34,6 +33,6 @@ app.use("/uploads", express.static("uploads")); //standard farmat
 
 app.listen(port, () => console.log(`Server is running at ${port}`));
 
-app.use("/", (req, res) => {
-  res.send("<h1>Welcome to the Foody App</h1>");
-});
+// app.use("/", (req, res) => {
+//   res.send("<h1>Welcome to the Foody App</h1>");
+// });
