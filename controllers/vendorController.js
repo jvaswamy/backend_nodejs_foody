@@ -11,7 +11,7 @@ const vendorResister = async (req, res) => {
   try {
     const vendorEmail = await Vendor.findOne({ email });
     if (vendorEmail) {
-      return res.status(400).json("Email already Taken");
+      return res.status(400).json({ error: "Email already Taken" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -35,18 +35,21 @@ const vendorLogin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const vendor = await Vendor.findOne({ email });
-    if (!vendor || (await bcrypt.compare(vendor.password, password))) {
+    const vendor = await Vendor.findOne({ email }).populate("firm");
+    if (!vendor || (await bcrypt.compare(password, vendor.password))) {
       return res
-        .status(401)
-        .json({ errorMessage: "Invalid Username or Password" });
+        .status(500)
+        .json({ error_msg: "Invalid Username or Password" });
     }
     // const payload={vendorId:vendor._id}
-    const token = jwtToken.sign({ vendorId: vendor._id }, secretKey, {
-      expiresIn: "1h",
-    });
+    const token = jwtToken.sign({ vendorId: vendor._id }, secretKey);
+    // {expiresIn: "1h",}
+    const vendorId = vendor._id;
+    const firmName = vendor.firm.length !== 0 ? vendor.firm[0].firmName : "";
 
-    res.status(200).json({ success: "Login successfully", token });
+    res
+      .status(200)
+      .json({ success: "Login successfully", token, vendorId, firmName });
     console.log("Login successfully");
   } catch (error) {
     console.log(error);

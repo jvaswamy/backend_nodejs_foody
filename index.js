@@ -5,6 +5,7 @@ const vendorRoutes = require("./routes/vendorRoutes");
 const bodyParser = require("body-parser");
 const firmRoutes = require("./routes/firmRoutes");
 const productRouters = require("./routes/productRoutes");
+
 const cors = require("cors");
 const path = require("path");
 
@@ -12,6 +13,8 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.json());
+// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const port = process.env.PORT || 4000;
 
