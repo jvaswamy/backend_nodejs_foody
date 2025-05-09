@@ -7,7 +7,8 @@ dotEnv.config();
 const secretKey = process.env.whatIsYourName;
 
 const verifyToken = async (req, res, next) => {
-  const token = req.headers.token;
+  const authHead = req.headers["authorization"];
+  const token = authHead && authHead.split(" ")[1];
   if (!token) {
     return res.status(401).json({ error: "Token is required" });
   }
