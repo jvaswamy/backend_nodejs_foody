@@ -50,6 +50,8 @@ const addFirm = async (req, res) => {
 
     const image = req.file ? req.file.filename : undefined;
 
+    console.log("Vendor ID:", req.vendorId);
+
     const vendor = await Vendor.findById(req.vendorId);
     if (!vendor) {
       return res.status(404).json({ message: "vendor not found" });
@@ -71,6 +73,7 @@ const addFirm = async (req, res) => {
 
     return res.status(200).json({ message: "firm added succefully." });
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: "internal server error" });
   }
 };

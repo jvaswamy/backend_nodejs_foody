@@ -95,7 +95,7 @@ const deleteProductById = async (req, res) => {
 };
 
 module.exports = {
-  addProduct: [upload.single("image")],
+  addProduct: [upload.single("image"),addProduct],
   getProductByFirm,
   deleteProductById,
 };

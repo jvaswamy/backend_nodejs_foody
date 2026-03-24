@@ -33,10 +33,11 @@ const vendorResister = async (req, res) => {
 
 const vendorLogin = async (req, res) => {
   const { email, password } = req.body;
-
+  
   try {
     const vendor = await Vendor.findOne({ email }).populate("firm");
-    if (!vendor || (await bcrypt.compare(password, vendor.password))) {
+    
+    if (!vendor || !(await bcrypt.compare(password, vendor.password))) {
       return res
         .status(500)
         .json({ error_msg: "Invalid Username or Password" });
@@ -45,8 +46,7 @@ const vendorLogin = async (req, res) => {
     const token = jwtToken.sign({ vendorId: vendor._id }, secretKey);
     // {expiresIn: "1h",}
     const vendorId = vendor._id;
-    const firmName = vendor.firm.length !== 0 ? vendor.firm[0].firmName : "";
-
+    const firmName =vendor.firm && vendor.firm.length !== 0 ? vendor.firm[0].firmName : "";
     res
       .status(200)
       .json({ success: "Login successfully", token, vendorId, firmName });

@@ -5,6 +5,7 @@ const vendorRoutes = require("./routes/vendorRoutes");
 const bodyParser = require("body-parser");
 const firmRoutes = require("./routes/firmRoutes");
 const productRouters = require("./routes/productRoutes");
+const dns = require("dns");
 
 const cors = require("cors");
 const path = require("path");
@@ -20,7 +21,9 @@ const port = process.env.PORT || 4000;
 
 dotEnv.config();
 
-mongoose
+dns.setServers(['1.1.1.1', '8.8.8.8']);
+
+  mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
     console.log(`MongoDB connected successfully`);
