@@ -21,7 +21,7 @@ const port = process.env.PORT || 4000;
 
 dotEnv.config();
 
-dns.setServers(['1.1.1.1', '8.8.8.8']);
+dns.setServers(['1.1.1.1', '8.8.8.8']);  //used for dns resolution to avoid "getaddrinfo ENOTFOUND" error when connecting to MongoDB Atlas
 
   mongoose
   .connect(process.env.MONGO_URL)
@@ -39,6 +39,6 @@ app.use("/uploads", express.static("uploads")); //standard farmat
 
 app.listen(port, () => console.log(`Server is running at ${port}`));
 
-// app.use("/", (req, res) => {
-//   res.send("<h1>Welcome to the Foody App</h1>");
-// });
+app.use("/", (req, res) => {
+  res.send("<h1>Welcome to the Foody App</h1>");
+});
