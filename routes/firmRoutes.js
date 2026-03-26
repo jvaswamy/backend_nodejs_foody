@@ -6,6 +6,7 @@ const path = require("path");
 const router = express.Router();
 
 router.post("/add-firm", verifyToken, firmController.addFirm);
+router.get("/vendor/:vendorId", firmController.getFirmsByVendor);
 
 router.delete("/:firmId", firmController.deleteFirmById);
 

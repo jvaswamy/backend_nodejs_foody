@@ -78,6 +78,27 @@ const addFirm = async (req, res) => {
   }
 };
 
+const getFirmsByVendor = async (req, res) => {
+  try {
+    const { vendorId } = req.params;
+
+    const vendor = await Vendor.findById(vendorId).populate({
+      path: "firm",
+      populate: {
+        path: "products",
+      },
+    });
+    if (!vendor) {
+      return res.status(404).json({ message: "vendor not found" });
+    }
+
+    return res.status(200).json({ firms: vendor.firm });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "internal server error" });
+  }
+};
+
 const deleteFirmById = async (req, res) => {
   try {
     const firmId = req.params.firmId;
@@ -92,5 +113,6 @@ const deleteFirmById = async (req, res) => {
 
 module.exports = {
   addFirm: [upload.single("image"), addFirm],
+  getFirmsByVendor,
   deleteFirmById,
 };
