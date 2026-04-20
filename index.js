@@ -5,6 +5,7 @@ const vendorRoutes = require("./routes/vendorRoutes");
 const bodyParser = require("body-parser");
 const firmRoutes = require("./routes/firmRoutes");
 const productRouters = require("./routes/productRoutes");
+const clientRoutes = require("./routes/clientRoutes");
 const dns = require("dns");
 
 const cors = require("cors");
@@ -17,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 // app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 
 dotEnv.config();
 
@@ -35,6 +36,7 @@ dns.setServers(['1.1.1.1', '8.8.8.8']);  //used for dns resolution to avoid "get
 app.use("/vendor", vendorRoutes);
 app.use("/firm", firmRoutes);
 app.use("/product", productRouters);
+app.use("/client", clientRoutes);
 app.use("/uploads", express.static("uploads")); //standard farmat
 
 app.listen(port, () => console.log(`Server is running at ${port}`));
