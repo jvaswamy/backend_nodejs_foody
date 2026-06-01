@@ -4,7 +4,6 @@ const fs = require("fs");
 
 //add food item
 const addFood = async (req, res) => {
-    // let image_filename=req.file ? req.file.filename : undefined;
     let image_filename=`${req.file.filename}`;
 
     const food = new foodModel({

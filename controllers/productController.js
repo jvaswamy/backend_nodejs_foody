@@ -1,6 +1,5 @@
 const Product = require("../models/Product");
 const multer = require("multer");
-const Firm = require("../models/Firm");
 const path = require("path");
 
 // Multer Storage Config
@@ -38,13 +37,6 @@ const addProduct = async (req, res) => {
     const { productName, price, category, bestSeller, description } = req.body;
     const image = req.file ? req.file.filename : undefined;
 
-    const firmId = req.params.firmId;
-    const firm = await Firm.findById(firmId);
-
-    if (!firm) {
-      return res.status(404).json({ error: "No firm found!" });
-    }
-
     const product = new Product({
       productName,
       price,
@@ -52,30 +44,11 @@ const addProduct = async (req, res) => {
       bestSeller,
       description,
       image,
-      firm: firm._id,
     });
 
     const savedProduct = await product.save();
-    firm.products.push(savedProduct);
-
-    await firm.save();
 
     res.status(200).json({ savedProduct });
-  } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
-const getProductByFirm = async (req, res) => {
-  try {
-    const firmId = req.params.firmId;
-    const firm = await Firm.findById(firmId);
-    if (!firm) {
-      return res.status(404).json({ error: "No Firm Found" });
-    }
-    const resturentName = firm.firmName;
-    const products = await Product.find({ firm: firmId });
-    res.status(200).json({ resturentName, products });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
@@ -95,7 +68,6 @@ const deleteProductById = async (req, res) => {
 };
 
 module.exports = {
-  addProduct: [upload.single("image"),addProduct],
-  getProductByFirm,
+  addProduct: [upload.single("image"), addProduct],
   deleteProductById,
 };
