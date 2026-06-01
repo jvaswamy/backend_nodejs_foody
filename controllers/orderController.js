@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const frontend_url ="https://frontend-foody-gold.vercel.app";
+const frontend_url = process.env.FRONTEND_URL;
 
 //placing user orders from frontend
 
@@ -43,11 +43,12 @@ const placeOrder = async (req, res) => {
       quantity: 1,
     });
 
+    const baseFrontend = String(frontend_url).replace(/\/$/, "");
     const session = await stripe.checkout.sessions.create({
       line_items: line_items,
       mode: "payment",
-      success_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
-      cancel_url: `${frontend_url}/verify?success=false&orderId=${newOrder._id}`,
+      success_url: `${baseFrontend}/#/verify?success=true&orderId=${newOrder._id}`,
+      cancel_url: `${baseFrontend}/#/verify?success=false&orderId=${newOrder._id}`,
     });
 
     res.json({ success: true, session_url: session.url });
