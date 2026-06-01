@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const frontend_url = process.env.FRONTEND_URL || "http://localhost:5173";
+const frontend_url ="https://frontend-foody-gold.vercel.app";
 
 //placing user orders from frontend
 
