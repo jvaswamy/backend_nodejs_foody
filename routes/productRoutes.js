@@ -3,8 +3,6 @@ const express = require("express");
 
 const router = express.Router();
 
-router.post("/add-product/:firmId", productController.addProduct);
-router.get("/:firmId/products", productController.getProductByFirm);
 router.delete("/:productId", productController.deleteProductById);
 
 // standart format
