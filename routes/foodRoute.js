@@ -4,15 +4,8 @@ const multer = require("multer");
 
 const foodRouter = express.Router();
 
-// image storage configuration using multer
-const storage = multer.diskStorage({
-    destination:"uploads", 
-    filename: (req, file, cb)=>{
-        return cb(null, `${Date.now()}${file.originalname}`);
-    }
-});
-
-const upload = multer({storage: storage});
+// use memory storage so we can upload directly to Cloudinary
+const upload = multer({ storage: multer.memoryStorage() });
 
 foodRouter.post("/add", upload.single("image"), addFood);
 foodRouter.get("/list",listFood);

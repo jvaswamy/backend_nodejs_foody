@@ -8,6 +8,7 @@ const secretKey = process.env.whatIsYourName;
 
 const vendorResister = async (req, res) => {
   const { username, email, password } = req.body;
+
   try {
     const vendorEmail = await Vendor.findOne({ email });
     if (vendorEmail) {

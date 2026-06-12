@@ -21,6 +21,9 @@ const foodSchema = new mongoose.Schema({
     type: String,
 
   },
+  imagePublicId: {
+    type: String,
+  },
 });
 
 const foodModel = mongoose.models.food || mongoose.model("food", foodSchema);

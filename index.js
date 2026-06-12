@@ -1,9 +1,9 @@
 const express = require("express");
 const dotEnv = require("dotenv");
+dotEnv.config();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const vendorRoutes = require("./routes/vendorRoutes");
-const productRouters = require("./routes/productRoutes");
 
 const dns = require("dns");
 const cors = require("cors");
@@ -22,8 +22,6 @@ app.use(express.json());
 
 const port = process.env.PORT || 4000;
 
-dotEnv.config();
-
 dns.setServers(["1.1.1.1", "8.8.8.8"]); //used for dns resolution to avoid "getaddrinfo ENOTFOUND" error when connecting to MongoDB Atlas
 
 mongoose
@@ -34,8 +32,6 @@ mongoose
   .catch((err) => {
     console.error("MongoDB connection failed", err);
   });
-
-app.use("/product", productRouters);
 
 // new implementation
 app.use("/vendor", vendorRoutes);
