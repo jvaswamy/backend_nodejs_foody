@@ -20,7 +20,8 @@ app.use(cors());
 app.use(express.json());
 // Serve uploaded images from `/images`
 
-const port = PORT || 4000;
+// Bind to the platform-provided PORT first (Render sets `process.env.PORT`)
+const port = process.env.PORT || PORT || 4000;
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]); // DNS servers to reduce transient resolution errors when connecting to Atlas
 
@@ -41,7 +42,7 @@ app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 app.use("/images", express.static("uploads")); //standard farmat
 
-app.listen(port, () => console.log(`Server is running at ${port}`));
+app.listen(port, () => console.log(`Server is running on port ${port}`));
 
 app.use("/", (req, res) => {
   res.send("<h1>welcome to Foody</h1>");
