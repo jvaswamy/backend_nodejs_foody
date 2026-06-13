@@ -19,7 +19,7 @@ const addFood = async (req, res) => {
             });
             imageUrl = result.secure_url;
             imagePublicId = result.public_id;
-        } else if (req.body.image) {
+        } else if (req.body && req.body.image) {
             imageUrl = req.body.image;
         }
 
