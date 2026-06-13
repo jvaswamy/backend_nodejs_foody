@@ -78,8 +78,8 @@ const verifyOrder = async (req, res) => {
 const userOrders = async (req, res) => {
   try {
     const orders = await orderModel.find({ userId: req.body.userId });
-    console.log(req.body.userId);
-    res.json({ success: true, data: orders });
+      // return orders for the authenticated user
+      res.json({ success: true, data: orders });
   } catch (error) {
     res.json({ success: false, message: "Error" });
   }
@@ -98,7 +98,7 @@ const listOrders = async (req, res) => {
 // api for updating order status
 
 const updateStatus = async (req, res) => {
-  console.log(req.body);
+  // update order status (admin)
   try {
     await orderModel.findByIdAndUpdate(req.body.orderId, {
       status: req.body.status,

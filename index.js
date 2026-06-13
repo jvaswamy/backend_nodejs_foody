@@ -1,8 +1,8 @@
+// Main server entry: configures Express, connects to MongoDB, and mounts routes
 const express = require("express");
 const dotEnv = require("dotenv");
 dotEnv.config();
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const vendorRoutes = require("./routes/vendorRoutes");
 
 const dns = require("dns");
@@ -16,14 +16,13 @@ const { PORT } = require("./data/apiPath");
 
 const app = express();
 
-app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
-// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// Serve uploaded images from `/images`
 
 const port = PORT || 4000;
 
-dns.setServers(["1.1.1.1", "8.8.8.8"]); //used for dns resolution to avoid "getaddrinfo ENOTFOUND" error when connecting to MongoDB Atlas
+dns.setServers(["1.1.1.1", "8.8.8.8"]); // DNS servers to reduce transient resolution errors when connecting to Atlas
 
 mongoose
   .connect(process.env.MONGO_URL)

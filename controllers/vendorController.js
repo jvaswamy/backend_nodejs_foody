@@ -22,12 +22,13 @@ const vendorResister = async (req, res) => {
       email,
       password: hashedPassword,
     });
-    newVendor.save();
+    await newVendor.save();
 
+    // respond on successful registration
     res.status(201).json({ message: "Vendor registered successfully" });
-    console.log("registered");
   } catch (error) {
     console.log(error);
+    console.error(error);
     res.status(500).json({ error: "Internal Error" });
   }
 };
@@ -48,10 +49,10 @@ const vendorLogin = async (req, res) => {
     // {expiresIn: "1h",}
     const vendorId = vendor._id;
 
+    // successful login: return token and id
     res.status(200).json({ success: "Login successfully", token, vendorId });
-    console.log("Login successfully");
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 };
