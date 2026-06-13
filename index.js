@@ -12,6 +12,7 @@ const foodRouter = require("./routes/foodRoute");
 const userRouter = require("./routes/userRoutes");
 const cartRouter = require("./routes/cartRoute");
 const orderRouter = require("./routes/orderRoute");
+const { PORT } = require("./data/apiPath");
 
 const app = express();
 
@@ -20,7 +21,7 @@ app.use(cors());
 app.use(express.json());
 // app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-const port = process.env.PORT || 4000;
+const port = PORT || 4000;
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]); //used for dns resolution to avoid "getaddrinfo ENOTFOUND" error when connecting to MongoDB Atlas
 

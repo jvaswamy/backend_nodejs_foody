@@ -2,11 +2,12 @@ const orderModel = require("../models/orderModel");
 const userModel = require("../models/userModel");
 const Stripe = require("stripe");
 const dotenv = require("dotenv");
+const { FRONTEND_URL } = require("../data/apiPath");
 
 dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const frontend_url = process.env.FRONTEND_URL;
+const frontend_url = FRONTEND_URL;
 
 //placing user orders from frontend
 

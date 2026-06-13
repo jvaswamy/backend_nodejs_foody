@@ -1,14 +1,17 @@
 const express = require("express");
-const {addFood,listFood,removeFood} = require("../controllers/foodController");
-const multer = require("multer");
+const {
+  addFood,
+  listFood,
+  removeFood,
+} = require("../controllers/foodController");
 
 const foodRouter = express.Router();
 
 // use memory storage so we can upload directly to Cloudinary
-const upload = multer({ storage: multer.memoryStorage() });
+// const upload = multer({ storage: multer.memoryStorage() });
 
-foodRouter.post("/add", upload.single("image"), addFood);
-foodRouter.get("/list",listFood);
-foodRouter.delete("/remove",removeFood);
+foodRouter.post("/add", addFood);
+foodRouter.get("/list", listFood);
+foodRouter.delete("/remove", removeFood);
 
-module.exports = foodRouter;  
+module.exports = foodRouter;
