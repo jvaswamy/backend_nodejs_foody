@@ -44,9 +44,10 @@ const vendorLogin = async (req, res) => {
         .status(500)
         .json({ error_msg: "Invalid Username or Password" });
     }
-    // const payload={vendorId:vendor._id}
-    const token = jwtToken.sign({ vendorId: vendor._id }, secretKey);
-    // {expiresIn: "1h",}
+    // create JWT with 1 hour expiry
+    const token = jwtToken.sign({ vendorId: vendor._id }, secretKey, {
+      expiresIn: "7d",
+    });
     const vendorId = vendor._id;
 
     // successful login: return token and id
